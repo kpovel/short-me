@@ -1,9 +1,11 @@
 <script>
-  import "../app.css";
+	import '../app.css';
 </script>
 
 <svelte:head>
-  <title>Short me</title>
+	<title>Short me</title>
 </svelte:head>
 
-<slot/>
+<main>
+	<slot />
+</main>
