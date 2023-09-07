@@ -12,9 +12,10 @@ export async function POST({ request }) {
 	try {
 		const result = await client.execute({
 			sql: 'insert into links (url, shortpath) values (:url, :shortpath) returning shortpath',
-			args: { url, shortpath: Math.random().toString() }
+			args: { url, shortpath: generateShortPath() }
 		});
 
+		// todo: if the linke already exist
 		return json({ shortpath: result.rows[0].shortpath });
 	} catch (/** @type{any} */ e) {
 		/** @type{string} */
@@ -36,4 +37,19 @@ function isValidURL(url) {
 	} catch (e) {
 		return false;
 	}
+}
+
+/**
+ * @param {number} length
+ * @return {string}
+ */
+function generateShortPath(length = 5) {
+	const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	let result = '';
+
+	for (let i = 0; i < length; i++) {
+		result += characters.charAt(Math.floor(Math.random() * characters.length));
+	}
+
+	return result;
 }
