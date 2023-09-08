@@ -1,54 +1,47 @@
 <script>
-	let url = '';
+	import { enhance } from '$app/forms';
+	import { onMount } from 'svelte';
+
+	/** @type {import('./shortpathAction').ShortpathAction} */
+	export let form;
+
+	let baseUrl = '';
+	onMount(() => {
+		baseUrl = window.location.origin;
+	});
+	$: shortLink = `${baseUrl}/r/${form?.shortpath}`;
+
 	let isLoading = false;
-
-	const submitData = {
-		shortlink: '',
-		errorMessage: ''
-	};
-
-	async function handleSubmit() {
-		isLoading = true;
-
-		const responce = await fetch('/api/shortLink', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ url })
-		});
-
-		const json = await responce.json();
-		if (responce.ok) {
-			const baseUrl = window.location.origin;
-			submitData.shortlink = `${baseUrl}/r/${json.shortpath}`;
-			submitData.errorMessage = '';
-		} else {
-			submitData.errorMessage = json.message;
-		}
-
-		isLoading = false;
-	}
 </script>
 
 <h1>Short me</h1>
-<form method="POST" on:submit|preventDefault={handleSubmit}>
+<form
+	method="POST"
+	action="?/shortLink"
+	use:enhance={() => {
+		isLoading = true;
+		return async ({ update }) => {
+			await update();
+			isLoading = false;
+		};
+	}}
+>
 	<label>
 		Paste the URL to be shortened
-		<input type="url" name="url" required autocomplete="off" bind:value={url} />
+		<input type="url" name="url" required autocomplete="off" />
 		<button type="submit">Short link</button>
 	</label>
 </form>
 
 {#if isLoading}
 	<p>Shortening...</p>
-{:else if submitData.errorMessage}
-	<h3 class="text-red-500">{submitData.errorMessage}</h3>
-{:else if submitData.shortlink}
+{:else if form?.message}
+	<h3 class="text-red-500">{form?.message}</h3>
+{:else if form?.shortpath}
 	<h3>
 		Short link:
-		<a class="text-blue-700 underline hover:text-indigo-700" href={submitData.shortlink}>
-			{submitData.shortlink}
+		<a class="text-blue-700 underline hover:text-indigo-700" href={shortLink}>
+			{shortLink}
 		</a>
 	</h3>
 {/if}
