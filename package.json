@@ -28,6 +28,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@libsql/client": "^0.3.2"
+		"@libsql/client": "^0.3.2",
+		"@vercel/analytics": "^1.0.2"
 	}
 }
