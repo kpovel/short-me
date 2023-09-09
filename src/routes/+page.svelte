@@ -1,6 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { onMount } from 'svelte';
+	import ArrowPath from '../img/arrow-path.svg';
 
 	/** @type {import('./shortpathAction').ShortpathAction} */
 	export let form;
@@ -46,10 +47,19 @@
 			placeholder="Enter your long URL here..."
 		/>
 		<button
-			class="h-10 w-full rounded-lg border border-gray-300 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+			class="flex h-10 w-full items-center justify-center rounded-lg border border-gray-300 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
 			type="submit"
 		>
-			Shrink It!
+			<div class="absolute flex items-center justify-center">
+				Shrink It!
+				<img
+					src={ArrowPath}
+					alt="arrow path"
+					class="animate-spin absolute left-20 w-6"
+          class:pause-animation={!isLoading}
+					hidden={!isLoading}
+				/>
+			</div>
 		</button>
 	</div>
 </form>
@@ -71,4 +81,8 @@
 	h2 {
 		text-wrap: balance;
 	}
+
+  .pause-animation {
+    animation-play-state: paused;
+  }
 </style>
