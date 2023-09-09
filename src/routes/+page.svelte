@@ -55,8 +55,8 @@
 				<img
 					src={ArrowPath}
 					alt="arrow path"
-					class="animate-spin absolute left-20 w-6"
-          class:pause-animation={!isLoading}
+					class="absolute left-20 w-6 animate-spin"
+					class:pause-animation={!isLoading}
 					hidden={!isLoading}
 				/>
 			</div>
@@ -65,13 +65,13 @@
 </form>
 
 {#if isLoading}
-	<p>Shortening...</p>
+	<p class="m-5 rounded-lg border-gray-300 bg-yellow-500 px-4 py-2 shadow-md">Shortening...</p>
 {:else if form?.message}
-	<h3 class="text-red-500">{form?.message}</h3>
+	<h3 class="m-5 rounded-lg border-gray-300 bg-red-600 px-4 py-2 shadow-md">{form?.message}</h3>
 {:else if form?.shortpath}
-	<h3>
+	<h3 class="m-5 rounded-lg border border-gray-300 bg-[#1bb429] px-2 py-1">
 		Short link:
-		<a class="text-blue-700 underline hover:text-indigo-700" href={shortLink}>
+		<a href={shortLink} class="text-blue-700 underline underline-offset-2 hover:text-indigo-700">
 			{shortLink}
 		</a>
 	</h3>
@@ -82,7 +82,7 @@
 		text-wrap: balance;
 	}
 
-  .pause-animation {
-    animation-play-state: paused;
-  }
+	.pause-animation {
+		animation-play-state: paused;
+	}
 </style>
