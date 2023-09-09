@@ -2,6 +2,8 @@
 	import { enhance } from '$app/forms';
 	import { onMount } from 'svelte';
 	import ArrowPath from '../img/arrow-path.svg';
+	import ClipboardDocument from '../img/clipboard-document.svg';
+	import ClipboardDocumentCheck from '../img/clipboard-document-check.svg';
 
 	/** @type {import('./shortpathAction').ShortpathAction} */
 	export let form;
@@ -13,6 +15,16 @@
 	$: shortLink = `${baseUrl}/r/${form?.shortpath}`;
 
 	let isLoading = false;
+
+	let ClipboardIcon = ClipboardDocument;
+	/** @param {string} text*/
+	function copyToClipboard(text) {
+		navigator.clipboard.writeText(text);
+		ClipboardIcon = ClipboardDocumentCheck;
+		setTimeout(() => {
+			ClipboardIcon = ClipboardDocument;
+		}, 2000);
+	}
 </script>
 
 <h2 class="text-balance pt-2 text-center text-xl">
@@ -69,12 +81,24 @@
 {:else if form?.message}
 	<h3 class="m-5 rounded-lg border-gray-300 bg-red-600 px-4 py-2 shadow-md">{form?.message}</h3>
 {:else if form?.shortpath}
-	<h3 class="m-5 rounded-lg border border-gray-300 bg-[#1bb429] px-2 py-1">
-		Short link:
-		<a href={shortLink} class="text-blue-700 underline underline-offset-2 hover:text-indigo-700">
-			{shortLink}
-		</a>
-	</h3>
+	<div
+		class="m-5 gap-2 flex flex-wrap items-center justify-between rounded-lg border border-gray-300 bg-[#1bb429] px-2 py-1"
+	>
+		<h3>Short link:</h3>
+		<span class="flex grow items-center justify-between gap-2">
+			<a href={shortLink} class="text-blue-700 underline underline-offset-2 hover:text-indigo-700">
+				{shortLink}
+			</a>
+			<hr class="ml-auto h-6 border-r border-gray-500" />
+			<button
+				on:click={() => {
+					copyToClipboard(shortLink);
+				}}
+			>
+				<img src={ClipboardIcon} alt="Clipboard Icon" class="h-6 w-6" />
+			</button>
+		</span>
+	</div>
 {/if}
 
 <style>
