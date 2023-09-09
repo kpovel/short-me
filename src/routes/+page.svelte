@@ -14,8 +14,13 @@
 	let isLoading = false;
 </script>
 
-<h1>Short me</h1>
+<h2 class="text-balance pt-2 text-center text-xl">
+	Welcome to <span class="font-bold">Short Me</span>!
+	<div>Transform lengthy URLs into concise, shareable links in seconds.</div>
+</h2>
+
 <form
+	class="pt-5 text-center text-lg"
 	method="POST"
 	action="?/shortLink"
 	use:enhance={() => {
@@ -26,11 +31,27 @@
 		};
 	}}
 >
-	<label>
-		Paste the URL to be shortened
-		<input type="url" name="url" required autocomplete="off" />
-		<button type="submit">Short link</button>
+	<label for="url">
+		<span class="font-bold">Drop & Shorten</span>!
+		<div>Paste the URL you want compacted.</div>
 	</label>
+	<div class="mx-5 my-2 flex flex-col items-center justify-center gap-2">
+		<input
+			class="w-full rounded-lg border border-gray-600 bg-gray-700 p-2 focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500"
+			type="url"
+			id="url"
+			name="url"
+			required
+			autocomplete="off"
+			placeholder="Enter your long URL here..."
+		/>
+		<button
+			class="h-10 w-full rounded-lg border border-gray-300 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+			type="submit"
+		>
+			Shrink It!
+		</button>
+	</div>
 </form>
 
 {#if isLoading}
@@ -45,3 +66,9 @@
 		</a>
 	</h3>
 {/if}
+
+<style>
+	h2 {
+		text-wrap: balance;
+	}
+</style>
