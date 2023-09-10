@@ -18,6 +18,6 @@
 
 <hr class="mb-3 border-t-gray-500" />
 
-<main>
+<main class="max-w-4xl m-auto">
 	<slot />
 </main>
