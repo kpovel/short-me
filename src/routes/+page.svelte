@@ -77,12 +77,16 @@
 </form>
 
 {#if isLoading}
-	<p class="m-5 rounded-lg border-gray-300 bg-yellow-500 px-4 py-2 shadow-md">Shortening...</p>
+	<p class="m-5 rounded-lg border border-gray-300 bg-yellow-500 px-4 py-2 shadow-md">
+		Shortening...
+	</p>
 {:else if form?.message}
-	<h3 class="m-5 rounded-lg border-gray-300 bg-red-600 px-4 py-2 shadow-md">{form?.message}</h3>
+	<h3 class="m-5 rounded-lg border border-gray-300 bg-red-600 px-4 py-2 shadow-md">
+		{form?.message}
+	</h3>
 {:else if form?.shortpath}
 	<div
-		class="m-5 gap-2 flex flex-wrap items-center justify-between rounded-lg border border-gray-300 bg-[#1bb429] px-2 py-1"
+		class="m-5 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-gray-300 bg-[#1bb429] p-2 pl-4"
 	>
 		<h3>Short link:</h3>
 		<span class="flex grow items-center justify-between gap-2">
