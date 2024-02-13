@@ -1,38 +1,33 @@
-# create-svelte
+# SHORT ME
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Do you even struggle with enormous links that don't look pretty at all? This
+project can simplify the process of creating short links that can be used
+everywhere.
 
-## Creating a project
+## Live demo
 
-If you're seeing this, you've probably already done this step. Congrats!
+Follow the link [Short Me](https://kpovel.vercel.app) and shorten your link.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Contributing
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Clone the repo
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+git clone https://github.com/kpovel/short-me
+cd short-me
 ```
 
-## Building
-
-To create a production version of your app:
+### Setting up environment variables
 
 ```bash
-npm run build
+cp .env.example .env
+nvim .env # edit .env with your favorite text editor
 ```
 
-You can preview the production build with `npm run preview`.
+### Start local development
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+```bash
+pnpm run dev
+```
+
+
