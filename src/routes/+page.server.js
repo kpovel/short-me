@@ -56,7 +56,7 @@ export const actions = {
  * @param {string} url
  * @return {boolean}
  * */
-export function isValidURL(url) {
+function isValidURL(url) {
 	try {
 		new URL(url);
 		return true;
