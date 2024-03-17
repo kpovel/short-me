@@ -5,7 +5,6 @@
 	import ClipboardDocument from '../img/clipboard-document.svg';
 	import ClipboardDocumentCheck from '../img/clipboard-document-check.svg';
 
-	/** @type {import('./shortpathAction').ShortpathAction} */
 	export let form;
 
 	let baseUrl = '';
@@ -80,9 +79,9 @@
 	<p class="m-5 rounded-lg border border-gray-300 bg-yellow-500 px-4 py-2 shadow-md">
 		Shortening...
 	</p>
-{:else if form?.message}
+{:else if form?.err}
 	<h3 class="m-5 rounded-lg border border-gray-300 bg-red-600 px-4 py-2 shadow-md">
-		{form?.message}
+		{form?.err}
 	</h3>
 {:else if form?.shortpath}
 	<div

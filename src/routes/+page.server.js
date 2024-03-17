@@ -1,25 +1,72 @@
 import { client } from '$lib/db/dbClient';
+import { generateShortPath } from '$lib/generateShortpath';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	shortLink: async ({ request, url }) => {
+	/**
+	 * @return {Promise<{err: string} | ShortLink>}
+	 */
+	shortLink: async ({ request }) => {
 		const data = await request.formData();
+		const url = data.get('url');
 
-		const existingShortLink = await client.execute({
-			sql: 'select (shortpath) from links where url = :url limit 1',
-			args: { url: data.get('url')?.toString() ?? '' }
-		});
+		if (!url) {
+			return { err: 'URL not provided' };
+		}
 
-    if (existingShortLink.rows.length) {
-      return existingShortLink.rows[0];
-    }
+		if (!isValidURL(url.toString())) {
+			return { err: 'URL is not valid' };
+		}
 
-		const responce = await fetch(`${url.origin}/api/shortLink`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ url: data.get('url') })
-		});
+		try {
+			const existingShortLink = await client.execute({
+				sql: 'select (shortpath) from links where url = :url limit 1',
+				args: { url: url.toString() }
+			});
 
-		return await responce.json();
+			if (existingShortLink.rows.length) {
+				/** @type {any} */
+				const row = existingShortLink.rows[0];
+
+				/** @type {ShortLink} */
+				const shortpath = row;
+				return shortpath;
+			}
+
+			const shortpath = generateShortPath();
+			await client.execute({
+				sql: 'insert into links (url, shortpath) values (:url, :shortpath)',
+				args: { url: url.toString(), shortpath }
+			});
+
+			return {
+				shortpath
+			};
+		} catch (e) {
+			console.error(e);
+
+			return {
+				err: 'An error occurred, please try again.'
+			};
+		}
 	}
 };
+
+/**
+ * @param {string} url
+ * @return {boolean}
+ * */
+export function isValidURL(url) {
+	try {
+		new URL(url);
+		return true;
+	} catch (e) {
+		return false;
+	}
+}
+
+/**
+ * Represents a short link.
+ * @typedef {Object} ShortLink
+ * @property {string} shortpath - The short path of the link
+ */
