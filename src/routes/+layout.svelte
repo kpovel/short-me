@@ -7,7 +7,8 @@
 </script>
 
 <svelte:head>
-	<title>Short me</title>
+	<title>Short Me</title>
+	<meta name="description" content="Shorten URLs. Track clicks. Share clean links. Effortless." />
 </svelte:head>
 
 <header class="flex h-16 items-center justify-center text-4xl font-bold text-transparent">
