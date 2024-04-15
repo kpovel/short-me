@@ -24,10 +24,15 @@ cp .env.example .env
 nvim .env # edit .env with your favorite text editor
 ```
 
+### Install dependencies
+
+```bash
+npm install
+```
+
 ### Start local development
 
 ```bash
-pnpm run dev
+npm run dev
 ```
-
 
