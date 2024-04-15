@@ -10,4 +10,6 @@ insert into links_temp
 select id, url, shortpath, usage, null
 from links;
 
+drop table links;
+
 alter table links_temp rename to links;
